@@ -24,10 +24,10 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2.1.4
       with:
-        files: |
+        path: |
           MetalANGLE.framework.ios.zip
           libMetalANGLE.a.ios.zip
-        path: ios
+        name: ios
 
   mac:
     runs-on: macos-latest
@@ -48,10 +48,10 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2.1.4
       with:
-        files: |
+        path: |
           MetalANGLE.framework.mac.zip
           libMetalANGLE.a.mac.zip
-        path: mac
+        name: mac
 
   build_gn:
     runs-on: macos-latest
@@ -77,9 +77,9 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2.1.4
       with:
-        files: |
+        path: |
           MetalANGLE.dylib.mac.zip
-        path: gn
+        name: gn
 
   tvos:
     runs-on: macos-latest
@@ -100,10 +100,10 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2.1.4
       with:
-        files: |
+        path: |
           MetalANGLE.framework.tvos.zip
           libMetalANGLE.a.tvos.zip
-        path: tvos
+        name: tvos
 
   ios_sim:
     runs-on: macos-latest
@@ -124,10 +124,10 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2.1.4
       with:
-        files: |
+        path: |
           MetalANGLE.framework.ios.simulator.zip
           libMetalANGLE.a.ios.simulator.zip
-        path: ios-sim
+        name: ios-sim
 
   tvos_sim:
     runs-on: macos-latest
@@ -148,7 +148,7 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v2.1.4
       with:
-        files: |
+        path: |
           MetalANGLE.framework.tvos.simulator.zip
           libMetalANGLE.a.tvos.simulator.zip
-        path: tvos-sim
+        name: tvos-sim
