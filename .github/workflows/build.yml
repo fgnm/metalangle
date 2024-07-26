@@ -27,6 +27,7 @@ jobs:
         files: |
           MetalANGLE.framework.ios.zip
           libMetalANGLE.a.ios.zip
+        path: ios
 
   mac:
     runs-on: macos-latest
@@ -50,6 +51,7 @@ jobs:
         files: |
           MetalANGLE.framework.mac.zip
           libMetalANGLE.a.mac.zip
+        path: mac
 
   build_gn:
     runs-on: macos-latest
@@ -77,6 +79,7 @@ jobs:
       with:
         files: |
           MetalANGLE.dylib.mac.zip
+        path: gn
 
   tvos:
     runs-on: macos-latest
@@ -100,6 +103,7 @@ jobs:
         files: |
           MetalANGLE.framework.tvos.zip
           libMetalANGLE.a.tvos.zip
+        path: tvos
 
   ios_sim:
     runs-on: macos-latest
@@ -123,6 +127,7 @@ jobs:
         files: |
           MetalANGLE.framework.ios.simulator.zip
           libMetalANGLE.a.ios.simulator.zip
+        path: ios-sim
 
   tvos_sim:
     runs-on: macos-latest
@@ -146,3 +151,4 @@ jobs:
         files: |
           MetalANGLE.framework.tvos.simulator.zip
           libMetalANGLE.a.tvos.simulator.zip
+        path: tvos-sim
