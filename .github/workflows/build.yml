@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: Build frameworks
 
 on:
   workflow_dispatch
@@ -22,17 +22,11 @@ jobs:
         cd ${GITHUB_WORKSPACE}/build_ios/Build/Products/Release-iphoneos && zip --symlinks -r ${GITHUB_WORKSPACE}/MetalANGLE.framework.ios.zip MetalANGLE.framework
         cd ${GITHUB_WORKSPACE}/build_ios/Build/Products/Release-iphoneos && zip --symlinks -r ${GITHUB_WORKSPACE}/libMetalANGLE.a.ios.zip libMetalANGLE_static.a
     - name: upload
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-artifact@v2.1.4
       with:
         files: |
           MetalANGLE.framework.ios.zip
           libMetalANGLE.a.ios.zip
-        draft: true
-        prerelease: false
-        name: "Draft"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   mac:
     runs-on: macos-latest
@@ -51,16 +45,11 @@ jobs:
         cd ${GITHUB_WORKSPACE}/build_mac/Build/Products/Release && zip --symlinks -r ${GITHUB_WORKSPACE}/MetalANGLE.framework.mac.zip MetalANGLE.framework
         cd ${GITHUB_WORKSPACE}/build_mac/Build/Products/Release && zip --symlinks -r ${GITHUB_WORKSPACE}/libMetalANGLE.a.mac.zip libMetalANGLE_static_mac.a
     - name: upload
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-artifact@v2.1.4
       with:
         files: |
           MetalANGLE.framework.mac.zip
           libMetalANGLE.a.mac.zip
-        draft: true
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_gn:
     runs-on: macos-latest
@@ -72,7 +61,7 @@ jobs:
         echo "${GITHUB_WORKSPACE}/depot_tools" >> $GITHUB_PATH
     - name: gclient sync
       run: |
-        python scripts/bootstrap.py
+        python3 scripts/bootstrap.py
         gclient sync
     - name: gn gen
       run: gn gen out/release --args="angle_enable_gl=false is_debug=false strip_absolute_paths_from_debug_symbols=true"
@@ -84,15 +73,10 @@ jobs:
         zip --symlinks -r MetalANGLE.dylib.mac.zip include libGLESv2.dylib libGLESv1_CM.dylib libEGL.dylib
         rm -v *.dylib
     - name: upload
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-artifact@v2.1.4
       with:
         files: |
           MetalANGLE.dylib.mac.zip
-        draft: true
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   tvos:
     runs-on: macos-latest
@@ -111,16 +95,11 @@ jobs:
         cd ${GITHUB_WORKSPACE}/build_tvos/Build/Products/Release-appletvos && zip --symlinks -r ${GITHUB_WORKSPACE}/MetalANGLE.framework.tvos.zip MetalANGLE.framework
         cd ${GITHUB_WORKSPACE}/build_tvos/Build/Products/Release-appletvos && zip --symlinks -r ${GITHUB_WORKSPACE}/libMetalANGLE.a.tvos.zip libMetalANGLE_static_tvos.a
     - name: upload
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-artifact@v2.1.4
       with:
         files: |
           MetalANGLE.framework.tvos.zip
           libMetalANGLE.a.tvos.zip
-        draft: true
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   ios_sim:
     runs-on: macos-latest
@@ -139,16 +118,11 @@ jobs:
         cd ${GITHUB_WORKSPACE}/build_ios/Build/Products/Release-iphonesimulator && zip --symlinks -r ${GITHUB_WORKSPACE}/MetalANGLE.framework.ios.simulator.zip MetalANGLE.framework
         cd ${GITHUB_WORKSPACE}/build_ios/Build/Products/Release-iphonesimulator && zip --symlinks -r ${GITHUB_WORKSPACE}/libMetalANGLE.a.ios.simulator.zip libMetalANGLE_static.a
     - name: upload
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-artifact@v2.1.4
       with:
         files: |
           MetalANGLE.framework.ios.simulator.zip
           libMetalANGLE.a.ios.simulator.zip
-        draft: true
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   tvos_sim:
     runs-on: macos-latest
@@ -167,13 +141,8 @@ jobs:
         cd ${GITHUB_WORKSPACE}/build_tvos/Build/Products/Release-appletvsimulator && zip --symlinks -r ${GITHUB_WORKSPACE}/MetalANGLE.framework.tvos.simulator.zip MetalANGLE.framework
         cd ${GITHUB_WORKSPACE}/build_tvos/Build/Products/Release-appletvsimulator && zip --symlinks -r ${GITHUB_WORKSPACE}/libMetalANGLE.a.tvos.simulator.zip libMetalANGLE_static_tvos.a
     - name: upload
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-artifact@v2.1.4
       with:
         files: |
           MetalANGLE.framework.tvos.simulator.zip
           libMetalANGLE.a.tvos.simulator.zip
-        draft: true
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
