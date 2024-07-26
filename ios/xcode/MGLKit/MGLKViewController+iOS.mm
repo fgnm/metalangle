@@ -19,7 +19,11 @@
     _preferredFramesPerSecond = preferredFramesPerSecond;
     if (_displayLink)
     {
-        if (ANGLE_APPLE_AVAILABLE_CI(13.0, 10.0))
+        if (ANGLE_APPLE_AVAILABLE_CI(15.0, 15.0))
+        {
+            _displayLink.preferredFrameRateRange = CAFrameRateRangeMake(60, _preferredFramesPerSecond, _preferredFramesPerSecond);
+        }
+        else if (ANGLE_APPLE_AVAILABLE_CI(13.0, 10.0))
         {
             _displayLink.preferredFramesPerSecond = _preferredFramesPerSecond;
         }
@@ -68,7 +72,11 @@
     if (!_displayLink)
     {
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(frameStep)];
-        if (ANGLE_APPLE_AVAILABLE_CI(13.0, 10.0))
+        if (ANGLE_APPLE_AVAILABLE_CI(15.0, 15.0))
+        {
+            _displayLink.preferredFrameRateRange = CAFrameRateRangeMake(60, _preferredFramesPerSecond, _preferredFramesPerSecond);
+        }
+        else if (ANGLE_APPLE_AVAILABLE_CI(13.0, 10.0))
         {
             _displayLink.preferredFramesPerSecond = _preferredFramesPerSecond == 1 ? 0 : _preferredFramesPerSecond;
         }
